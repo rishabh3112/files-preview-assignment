@@ -9,11 +9,15 @@ let files = [];
 let currentFileIndex = 0;
 
 const renderFiles = async () => {
-    for (const file of files) {
+    for (const file in files) {
         const fileNode = document.createElement("div");
-        const textContent = document.createTextNode(file.title);
+        const textContent = document.createTextNode(files[file].title);
         fileNode.classList.add("file");
         fileNode.appendChild(textContent);
+        fileNode.addEventListener("click", async () => {
+            setFileIndex(file);
+            await renderPreview();
+        })
         filesContainerNode.appendChild(fileNode);
     }
     currentFileIndex = 0;
