@@ -8,14 +8,6 @@ const previewTextNode = document.querySelector(".preview-container p");
 let files = [];
 let currentFileIndex = 0;
 
-const concatString = (str) => {
-    if (str.length <= 30) {
-        return str;
-    }
-
-    return str.substring(0, 17) + "..." + str.slice(-10);
-}
-
 const renderFiles = async () => {
     for (const file in files) {
         const fileNode = document.createElement("div");
@@ -24,7 +16,8 @@ const renderFiles = async () => {
         thumbnailNode.classList.add("thumbnail");
         thumbnailNode.style.backgroundImage = `url("${files[file].previewImage}")`;
         
-        const textContent = document.createTextNode(concatString(files[file].title));
+        const textContent = document.createElement("span");
+        textContent.innerText = files[file].title;
         
         fileNode.classList.add("file");
         fileNode.appendChild(thumbnailNode);
@@ -36,7 +29,28 @@ const renderFiles = async () => {
         
         filesContainerNode.appendChild(fileNode);
     }
+
     currentFileIndex = 0;
+    const fileNodes = document.querySelectorAll(".file");
+    for (const fileNode of fileNodes) {
+        const thumbnailNode = fileNode.children[0];
+        const thumbnailStyle = window.getComputedStyle(thumbnailNode);
+        const fileNameNode = fileNode.children[1];
+        const textWidth = fileNameNode.clientWidth;
+        const boxWidth = fileNode.clientWidth - thumbnailNode.clientWidth - parseInt(thumbnailStyle.marginLeft) - parseInt(thumbnailStyle.marginRight);
+        const redundantWidth = textWidth - boxWidth;        
+        
+        if (redundantWidth <= 0) {
+            continue;
+        }
+
+        const textContent = fileNameNode.innerText;
+        const computedStyles = window.getComputedStyle(fileNameNode, null);
+        const fontSize = parseInt(computedStyles.getPropertyValue("font-size"));
+        const redundantChars = redundantWidth / (fontSize * 0.4);
+        const requiredWidth = textContent.length - redundantChars;
+        fileNameNode.innerText = textContent.substring(0, requiredWidth/2) + "..." + textContent.slice(-1 * (requiredWidth/2 - 2));
+    }
 }
 
 const renderPreview = async () => {
@@ -48,7 +62,6 @@ const renderPreview = async () => {
 const fetchFiles = async () => {
     const response = await fetch("data.json");
     files = await response.json();
-    console.log(files[0]);
 }
 
 const setFileIndex = (newIndex) => {
