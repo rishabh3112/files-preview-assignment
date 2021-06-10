@@ -1,0 +1,59 @@
+body {
+    overflow: hidden;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    width: 100vw;
+    height: 100vh;
+}
+.layout-container {
+    display: grid;
+    grid-template-columns: auto 500px;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    height: calc(100vh - 40px);
+}
+.preview-container {
+    padding: 50px 0px;
+    display: grid;
+    grid-template-rows: 95% auto;
+}
+
+.preview-container .preview {
+    width: 100%;
+    border-radius: 5px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.preview-container p {
+    text-align: center;
+    font-size: large;
+    color: #777;
+}
+
+.files-container {
+    padding: 50px 0px;
+    margin-right: 10px;
+}
+
+.files-container .file {
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 70px auto;
+    align-items: center;
+}
+
+.thumbnail {
+    width: calc(100% - 20px);
+    height: 50px !important;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center center;
+    margin: 10px;
+}
+
+.focus {
+    background-color: #007AFF;
+    color: #fff;
+}
