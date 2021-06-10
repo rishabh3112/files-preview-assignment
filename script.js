@@ -37,8 +37,9 @@ const renderFiles = async () => {
         const thumbnailStyle = window.getComputedStyle(thumbnailNode);
         const fileNameNode = fileNode.children[1];
         const textWidth = fileNameNode.clientWidth;
-        const boxWidth = fileNode.clientWidth - thumbnailNode.clientWidth - parseInt(thumbnailStyle.marginLeft) - parseInt(thumbnailStyle.marginRight);
-        const redundantWidth = textWidth - boxWidth;        
+        const boxWidth = fileNode.clientWidth - (thumbnailNode.clientWidth + parseInt(thumbnailStyle.marginLeft) + parseInt(thumbnailStyle.marginRight));
+        // Width of text overflowed out of box
+        const redundantWidth = textWidth - boxWidth;
         
         if (redundantWidth <= 0) {
             continue;
@@ -47,6 +48,7 @@ const renderFiles = async () => {
         const textContent = fileNameNode.innerText;
         const computedStyles = window.getComputedStyle(fileNameNode, null);
         const fontSize = parseInt(computedStyles.getPropertyValue("font-size"));
+        // Approximate redundant characters in string
         const redundantChars = redundantWidth / (fontSize * 0.4);
         const requiredWidth = textContent.length - redundantChars;
         fileNameNode.innerText = textContent.substring(0, requiredWidth/2) + "..." + textContent.slice(-1 * (requiredWidth/2 - 2));
