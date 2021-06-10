@@ -8,6 +8,14 @@ const previewTextNode = document.querySelector(".preview-container p");
 let files = [];
 let currentFileIndex = 0;
 
+const concatString = (str) => {
+    if (str.length <= 30) {
+        return str;
+    }
+
+    return str.substring(0, 17) + "..." + str.slice(-10);
+}
+
 const renderFiles = async () => {
     for (const file in files) {
         const fileNode = document.createElement("div");
@@ -16,7 +24,7 @@ const renderFiles = async () => {
         thumbnailNode.classList.add("thumbnail");
         thumbnailNode.style.backgroundImage = `url("${files[file].previewImage}")`;
         
-        const textContent = document.createTextNode(files[file].title);
+        const textContent = document.createTextNode(concatString(files[file].title));
         
         fileNode.classList.add("file");
         fileNode.appendChild(thumbnailNode);
