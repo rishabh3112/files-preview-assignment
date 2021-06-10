@@ -46,7 +46,7 @@ const renderPreview = async () => {
 }
 
 const fetchFiles = async () => {
-    const response = await fetch("/data.json");
+    const response = await fetch("data.json");
     files = await response.json();
     console.log(files[0]);
 }
