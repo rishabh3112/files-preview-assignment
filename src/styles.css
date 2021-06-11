@@ -10,7 +10,7 @@ body {
 }
 .layout-container {
     display: grid;
-    grid-template-columns: 300px auto;
+    grid-template-columns: 200px auto;
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
@@ -46,7 +46,6 @@ body {
     display: grid;
     grid-template-columns: calc(50px + 2 * var(--white-space-factor)) auto;
     align-items: center;
-    position: relative;
     cursor: pointer;
 }
 
@@ -65,14 +64,20 @@ body {
 }
 
 .file span {
-    white-space: nowrap;
     user-select: none;
+    position: relative;
+}
+
+.file.focus span::before {
+    background-color: #007AFF;
 }
 
 .file span::before {
-    white-space: nowrap;
+    background-color: #fff;
     content: attr(data-before);
+    white-space: nowrap;
     position: absolute;
+    bottom: 0px;
     right: var(--white-space-factor);
     text-overflow: ellipsis;
     overflow: hidden;
