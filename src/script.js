@@ -56,6 +56,7 @@ const renderFiles = async () => {
         });
         fileNameNode.style.setProperty("--file-width", `${fileNameNode.clientWidth - 5}px`);
         fileNameNode.setAttribute("data-before", textContent);
+        fileNameNode.style.setProperty("height", window.getComputedStyle(fileNameNode, ":before").height);
     }
 }
 
