@@ -3,6 +3,7 @@
 const filesContainerNode = document.querySelector(".files-container");
 const previewImageNode = document.querySelector(".preview-container .preview");
 const previewTextNode = document.querySelector(".preview-container p");
+const lines = 3;
 
 let files = [];
 let currentFileIndex = 0;
@@ -33,40 +34,28 @@ const renderFiles = async () => {
 
     const fileNodes = document.querySelectorAll(".file");
     for (const fileNode of fileNodes) {
-        const thumbnailNode = fileNode.children[0];
-        const thumbnailStyle = window.getComputedStyle(thumbnailNode);
         const fileNameNode = fileNode.children[1];
-        const textWidth = fileNameNode.clientWidth;
-        const boxWidth =
-            fileNode.clientWidth -
-            (thumbnailNode.clientWidth +
-                parseInt(thumbnailStyle.marginLeft) +
-                parseInt(thumbnailStyle.marginRight));
-        // Width of text overflowed out of box
-        const redundantWidth = textWidth - boxWidth;
+        const fileNameOverflowHeight = fileNameNode.clientHeight;
 
-        if (redundantWidth <= 0) {
+        fileNameNode.style.whiteSpace = "nowrap";
+        const lineHeight = fileNameNode.clientHeight;
+        fileNameNode.style.whiteSpace = "";
+
+        if (fileNameOverflowHeight <= lineHeight * lines) {
             continue;
         }
+
+        fileNameNode.style.height = `${lineHeight * lines}px`;
+        fileNameNode.style.overflow = "hidden";
 
         // Truncate text if overflowing
         const textContent = fileNameNode.innerText;
         const whiteSpaceFactor = parseInt(window.getComputedStyle(document.body).getPropertyValue("--white-space-factor"));
-        Object.assign(fileNameNode.style, {
-            width: "50%",
-            overflow: "hidden",
-            "word-break": "break-all",
-            "white-space": "normal",
-        });
         fileNameNode.style.setProperty(
             "--file-width",
-            `${fileNameNode.clientWidth - whiteSpaceFactor/2}px`
+            `${(fileNameNode.clientWidth - whiteSpaceFactor)/2}px`
         );
         fileNameNode.setAttribute("data-before", textContent);
-        fileNameNode.style.setProperty(
-            "height",
-            window.getComputedStyle(fileNameNode, ":before").height
-        );
     }
 };
 
