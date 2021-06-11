@@ -51,6 +51,7 @@ const renderFiles = async () => {
 
         // Truncate text if overflowing
         const textContent = fileNameNode.innerText;
+        const whiteSpaceFactor = parseInt(window.getComputedStyle(document.body).getPropertyValue("--white-space-factor"));
         Object.assign(fileNameNode.style, {
             width: "50%",
             overflow: "hidden",
@@ -59,7 +60,7 @@ const renderFiles = async () => {
         });
         fileNameNode.style.setProperty(
             "--file-width",
-            `${fileNameNode.clientWidth - 5}px`
+            `${fileNameNode.clientWidth - whiteSpaceFactor/2}px`
         );
         fileNameNode.setAttribute("data-before", textContent);
         fileNameNode.style.setProperty(
