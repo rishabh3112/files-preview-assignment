@@ -42,6 +42,8 @@ body {
     display: grid;
     grid-template-columns: 70px auto;
     align-items: center;
+    position: relative;
+    cursor: pointer;
 }
 
 .thumbnail {
@@ -60,4 +62,17 @@ body {
 
 .file span {
     white-space: nowrap;
+    height: 19px;
+    user-select: none;
+}
+
+.file span::before {
+    white-space: nowrap;
+    content: attr(data-before);
+    position: absolute;
+    right: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: var(--file-width);
+    direction: rtl;
 }

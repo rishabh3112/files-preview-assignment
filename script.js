@@ -18,7 +18,7 @@ const renderFiles = async () => {
         
         const textContent = document.createElement("span");
         textContent.innerText = files[file].title;
-        
+
         fileNode.classList.add("file");
         fileNode.appendChild(thumbnailNode);
         fileNode.appendChild(textContent);
@@ -31,6 +31,7 @@ const renderFiles = async () => {
     }
 
     currentFileIndex = 0;
+
     const fileNodes = document.querySelectorAll(".file");
     for (const fileNode of fileNodes) {
         const thumbnailNode = fileNode.children[0];
@@ -45,13 +46,16 @@ const renderFiles = async () => {
             continue;
         }
 
+        // Truncate text if overflowing
         const textContent = fileNameNode.innerText;
-        const computedStyles = window.getComputedStyle(fileNameNode, null);
-        const fontSize = parseInt(computedStyles.getPropertyValue("font-size"));
-        // Approximate redundant characters in string
-        const redundantChars = redundantWidth / (fontSize * 0.4);
-        const requiredWidth = textContent.length - redundantChars;
-        fileNameNode.innerText = textContent.substring(0, requiredWidth/2) + "..." + textContent.slice(-1 * (requiredWidth/2 - 2));
+        Object.assign(fileNameNode.style, {
+            "width": "50%",
+            "overflow": "hidden",
+            "word-break": "break-all",
+            "white-space": "normal",
+        });
+        fileNameNode.style.setProperty("--file-width", `${fileNameNode.clientWidth - 5}px`);
+        fileNameNode.setAttribute("data-before", textContent);
     }
 }
 
