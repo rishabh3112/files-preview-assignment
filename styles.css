@@ -66,21 +66,6 @@ body {
 .file span {
     user-select: none;
     position: relative;
-}
-
-.file.focus span::before {
-    background-color: #007AFF;
-}
-
-.file span::before {
-    background-color: #fff;
-    content: attr(data-before);
-    white-space: nowrap;
-    position: absolute;
-    bottom: 0px;
-    right: var(--white-space-factor);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: var(--file-width);
-    direction: rtl;
+    word-break:keep-all;
+    margin-right: var(--white-space-factor);
 }
