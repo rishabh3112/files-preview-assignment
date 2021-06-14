@@ -35,27 +35,21 @@ const renderFiles = async () => {
     const fileNodes = document.querySelectorAll(".file");
     for (const fileNode of fileNodes) {
         const fileNameNode = fileNode.children[1];
-        const fileNameOverflowHeight = fileNameNode.clientHeight;
+        let fileNameOverflowHeight = fileNameNode.clientHeight;
 
         fileNameNode.style.whiteSpace = "nowrap";
-        const lineHeight = fileNameNode.clientHeight;
+        let lineHeight = fileNameNode.clientHeight;
         fileNameNode.style.whiteSpace = "";
-
-        if (fileNameOverflowHeight <= lineHeight * lines) {
-            continue;
-        }
-
-        fileNameNode.style.height = `${lineHeight * lines}px`;
-        fileNameNode.style.overflow = "hidden";
-
-        // Truncate text if overflowing
+        
         const textContent = fileNameNode.innerText;
-        const whiteSpaceFactor = parseInt(window.getComputedStyle(document.body).getPropertyValue("--white-space-factor"));
-        fileNameNode.style.setProperty(
-            "--file-width",
-            `${(fileNameNode.clientWidth - whiteSpaceFactor)/2}px`
-        );
-        fileNameNode.setAttribute("data-before", textContent);
+        let front = textContent.slice(0, textContent.length/2 + 1);
+        let back = textContent.slice(textContent.length/2 + 1);
+        while (fileNameOverflowHeight > lineHeight * lines) {
+            front = front.slice(0, -1);
+            back = back.slice(1);
+            fileNameNode.innerHTML = `${front} ... ${back}`;
+            fileNameOverflowHeight = fileNameNode.clientHeight;
+        }
     }
 };
 
