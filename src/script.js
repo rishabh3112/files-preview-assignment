@@ -42,13 +42,18 @@ const renderFiles = async () => {
         fileNameNode.style.whiteSpace = "";
         
         const textContent = fileNameNode.innerText;
-        let front = textContent.slice(0, textContent.length/2 + 1);
-        let back = textContent.slice(textContent.length/2 + 1);
+        let front = textContent.slice(0, textContent.length/2 - 2).split("");
+        let back = textContent.slice(textContent.length/2 + 1).split("");
+        let isFront = true;
         while (fileNameOverflowHeight > lineHeight * lines) {
-            front = front.slice(0, -1);
-            back = back.slice(1);
-            fileNameNode.innerHTML = `${front} ... ${back}`;
+            if (isFront === true) {
+                front.pop();
+            } else {
+                back.shift();
+            }
+            fileNameNode.innerHTML = `${front.join("")} ... ${back.join("")}`;
             fileNameOverflowHeight = fileNameNode.clientHeight;
+            isFront = !isFront;
         }
     }
 };

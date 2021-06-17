@@ -8,9 +8,10 @@ body {
     width: 100vw;
     height: 100vh;
 }
+
 .layout-container {
     display: grid;
-    grid-template-columns: 200px auto;
+    grid-template-columns: 300px auto;
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
@@ -66,6 +67,6 @@ body {
 .file span {
     user-select: none;
     position: relative;
-    word-break:keep-all;
+    word-break: keep-all;
     margin-right: var(--white-space-factor);
 }
